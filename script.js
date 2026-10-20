@@ -21,7 +21,7 @@ function showSession(session, client, remembered) {
   form.hidden = true;
   signOutButton.hidden = false;
   loginSubtitle.textContent = "Your account is connected.";
-  showMessage(`Signed in as ${session.user.email}. Authentication is connected; file storage is not set up yet.`);
+  showMessage(`Signed in as ${session.user.email}. Authentication is connected. Your administrator can enable office-file access when storage is configured.`);
 }
 
 function showSignedOut() {

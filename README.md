@@ -24,3 +24,9 @@ Authentication is connected. Office file storage, database tables, and Storage p
 
 The site is static and can be hosted from this folder on Cloudflare Pages. Configure the Supabase Auth redirect/site URL to match the final published domain before adding password recovery or OAuth flows.
 
+
+## Phase 1 workspace engine
+
+The workspace provides owner-scoped case records, private document uploads, metadata indexing, a manual review queue, and user-confirmed hearing/deadline entries. Apply `supabase/schema.sql` in the Supabase SQL Editor before using these features. Files are private and limited to 25 MB.
+
+This first phase does **not** include OCR/document text extraction, automated conflict matching, legal-source crawling, Google Calendar sync, or email/phone notifications. Document details and dates must be checked by a person. Records are scoped to individual users for this initial phase; shared firm/team access needs an explicit organization-and-membership model before production use.

@@ -12,7 +12,7 @@
   </head>
   <body>
     <header class="site-header">
-      <a class="brand brand-header" href="#home" aria-label="TEK.Go home">
+      <a class="brand brand-header" href="index.html" aria-label="TEK.Go home">
         <svg class="brand-icon" viewBox="0 0 64 64" role="img" aria-label="">
           <path class="folder-back" d="M8 15.5a6 6 0 0 1 6-6h14l6 6h16a6 6 0 0 1 6 6v28a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6z"/>
           <path class="folder-front" d="M14 20a5 5 0 0 1 5-5h26a5 5 0 0 1 5 5v29a5 5 0 0 1-5 5H19a5 5 0 0 1-5-5z"/>
@@ -23,9 +23,9 @@
         <span class="brand-name">TEK<span class="brand-dot">.</span><span class="brand-go">Go</span></span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a class="nav-link active" href="#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
-        <a class="nav-link" href="#about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg><span>About</span></a>
-        <a class="nav-link" href="#help"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.3 1.8c-1.2 1-1.9 1.4-1.9 3M12 17.5h.01"/></svg><span>Help</span></a>
+        <a class="nav-link active" href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+        <a class="nav-link" href="about.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg><span>About</span></a>
+        <a class="nav-link" href="help.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.3 1.8c-1.2 1-1.9 1.4-1.9 3M12 17.5h.01"/></svg><span>Help</span></a>
       </nav>
     </header>
 
@@ -39,7 +39,7 @@
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
       <section class="intro" id="about" aria-label="About TEK.Go">
-        <a class="brand brand-hero" href="#home" aria-label="TEK.Go">
+        <a class="brand brand-hero" href="index.html" aria-label="TEK.Go">
           <svg class="brand-icon" viewBox="0 0 64 64" aria-hidden="true">
             <path class="folder-back" d="M8 15.5a6 6 0 0 1 6-6h14l6 6h16a6 6 0 0 1 6 6v28a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6z"/>
             <path class="folder-front" d="M14 20a5 5 0 0 1 5-5h26a5 5 0 0 1 5 5v29a5 5 0 0 1-5 5H19a5 5 0 0 1-5-5z"/>
@@ -65,15 +65,16 @@
         <form id="login-form">
           <label class="input-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2z"/></svg><span class="sr-only">Work email</span><input type="email" name="email" autocomplete="username" placeholder="Work email" required /></label>
           <label class="input-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg><span class="sr-only">Password</span><input id="password" type="password" name="password" autocomplete="current-password" placeholder="Password" required /><button class="reveal" id="reveal-password" type="button" aria-label="Show password"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.5"/></svg></button></label>
-          <div class="form-options"><label class="remember"><input type="checkbox" name="remember" checked /><span class="checkmark"></span><span>Remember me</span></label><a href="#help">Forgot password?</a></div>
+          <div class="form-options"><label class="remember"><input type="checkbox" name="remember" checked /><span class="checkmark"></span><span>Remember me</span></label><a href="forgot-password.html">Forgot password?</a></div>
           <button class="sign-in" type="submit"><span>Sign In</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></button>
           <p class="demo-notice" id="auth-status" role="status" aria-live="polite"></p>
         </form>
+        <a class="sign-out-button workspace-link" id="open-workspace" href="workspace.html" hidden>Open workspace →</a>
         <button class="sign-out-button" id="sign-out" type="button" hidden>Sign Out</button>
       </section>
       <div class="hero-footer"><span>EFFICIENT&nbsp; / &nbsp;SECURE&nbsp; / &nbsp;MODERN</span><i></i></div>
     </main>
-    <footer id="help" class="page-footer">Need help accessing your files? Contact your office administrator.</footer>
+    <footer class="page-footer">Need help accessing your files? <a href="help.html">Visit the Help Centre</a>.</footer>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js" crossorigin="anonymous"></script>
     <script src="supabase-config.js"></script>
     <script src="script.js"></script>

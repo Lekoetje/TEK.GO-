@@ -5,6 +5,7 @@ const emailInput = form.elements.email;
 const rememberInput = form.elements.remember;
 const revealButton = document.querySelector("#reveal-password");
 const signOutButton = document.querySelector("#sign-out");
+const workspaceLink = document.querySelector("#open-workspace");
 const loginSubtitle = document.querySelector(".login-subtitle");
 const clients = window.tekGoSupabaseClients;
 let activeClient = null;
@@ -20,14 +21,16 @@ function showSession(session, client, remembered) {
   rememberInput.checked = remembered;
   form.hidden = true;
   signOutButton.hidden = false;
+  workspaceLink.hidden = false;
   loginSubtitle.textContent = "Your account is connected.";
-  showMessage(`Signed in as ${session.user.email}. Authentication is connected; file storage is not set up yet.`);
+  showMessage(`Signed in as ${session.user.email}. Your workspace is ready to open.`);
 }
 
 function showSignedOut() {
   activeClient = null;
   form.hidden = false;
   signOutButton.hidden = true;
+  workspaceLink.hidden = true;
   loginSubtitle.textContent = "Sign in to access your office files.";
   statusMessage.classList.remove("visible");
   statusMessage.textContent = "";
@@ -85,6 +88,7 @@ if (!clients) {
       const otherClient = selectedClient === rememberedClient ? temporaryClient : rememberedClient;
       await otherClient.auth.signOut({ scope: "local" });
       showSession(data.session, selectedClient, selectedClient === rememberedClient);
+      window.location.assign("workspace.html");
     } catch {
       showMessage("Sign-in failed. Check your work email and password, or contact your office administrator.");
     } finally {

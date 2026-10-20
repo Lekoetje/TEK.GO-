@@ -1,0 +1,24 @@
+-- TEK.Go Phase 1. Run in Supabase SQL Editor. Records are private to each user.
+create extension if not exists pgcrypto;
+create table if not exists public.matter_cases(id uuid primary key default gen_random_uuid(),user_id uuid not null references auth.users(id) on delete cascade,case_number text not null check(length(trim(case_number)) between 1 and 100),title text not null check(length(trim(title)) between 1 and 200),case_type text not null default 'Other',court text,notes text,created_at timestamptz not null default now(),updated_at timestamptz not null default now(),unique(user_id,case_number),unique(id,user_id));
+create index if not exists matter_cases_user_created_idx on public.matter_cases(user_id,created_at desc);
+create table if not exists public.case_documents(id uuid primary key default gen_random_uuid(),user_id uuid not null references auth.users(id) on delete cascade,case_id uuid not null,file_name text not null,storage_path text not null unique,mime_type text,file_size bigint not null default 0 check(file_size>=0 and file_size<=26214400),document_type text not null default 'Original',document_date date,notes text,review_status text not null default 'pending' check(review_status in ('pending','checked')),created_at timestamptz not null default now(),foreign key(case_id,user_id) references public.matter_cases(id,user_id) on delete cascade);
+create index if not exists case_documents_user_case_idx on public.case_documents(user_id,case_id,created_at desc);
+create table if not exists public.case_events(id uuid primary key default gen_random_uuid(),user_id uuid not null references auth.users(id) on delete cascade,case_id uuid not null,title text not null check(length(trim(title)) between 1 and 180),event_at timestamptz not null,confirmed boolean not null default false,source text,created_at timestamptz not null default now(),foreign key(case_id,user_id) references public.matter_cases(id,user_id) on delete cascade);
+create index if not exists case_events_user_event_idx on public.case_events(user_id,event_at);
+alter table public.matter_cases enable row level security;
+alter table public.case_documents enable row level security;
+alter table public.case_events enable row level security;
+drop policy if exists "owners manage their matters" on public.matter_cases;
+create policy "owners manage their matters" on public.matter_cases for all to authenticated using(user_id=auth.uid()) with check(user_id=auth.uid());
+drop policy if exists "owners manage their documents" on public.case_documents;
+create policy "owners manage their documents" on public.case_documents for all to authenticated using(user_id=auth.uid()) with check(user_id=auth.uid() and exists(select 1 from public.matter_cases c where c.id=case_id and c.user_id=auth.uid()));
+drop policy if exists "owners manage their events" on public.case_events;
+create policy "owners manage their events" on public.case_events for all to authenticated using(user_id=auth.uid()) with check(user_id=auth.uid() and exists(select 1 from public.matter_cases c where c.id=case_id and c.user_id=auth.uid()));
+insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types) values('case-files','case-files',false,26214400,array['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','image/jpeg','image/png','image/tiff']) on conflict(id) do update set public=false,file_size_limit=26214400,allowed_mime_types=excluded.allowed_mime_types;
+drop policy if exists "users read own case files" on storage.objects;
+create policy "users read own case files" on storage.objects for select to authenticated using(bucket_id='case-files' and (storage.foldername(name))[1]=auth.uid()::text);
+drop policy if exists "users upload own case files" on storage.objects;
+create policy "users upload own case files" on storage.objects for insert to authenticated with check(bucket_id='case-files' and (storage.foldername(name))[1]=auth.uid()::text);
+drop policy if exists "users delete own case files" on storage.objects;
+create policy "users delete own case files" on storage.objects for delete to authenticated using(bucket_id='case-files' and (storage.foldername(name))[1]=auth.uid()::text);
